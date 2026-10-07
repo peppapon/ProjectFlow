@@ -1,0 +1,86 @@
+﻿@startuml er_diagram
+
+entity "users" as users {
+  * id : INTEGER <<PK>>
+  --
+  * username : VARCHAR(80) <<UNIQUE>>
+  * email : VARCHAR(120) <<UNIQUE>>
+  * password_hash : VARCHAR(255)
+  * role : VARCHAR(20)
+  * created_at : DATETIME
+  * is_active : BOOLEAN
+}
+
+entity "projects" as projects {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(200)
+  description : TEXT
+  * created_at : DATETIME
+  * updated_at : DATETIME
+  * is_active : BOOLEAN
+}
+
+entity "tasks" as tasks {
+  * id : INTEGER <<PK>>
+  --
+  * title : VARCHAR(200)
+  description : TEXT
+  * status : VARCHAR(20)
+  priority : VARCHAR(20)
+  * project_id : INTEGER <<FK>>
+  * creator_id : INTEGER <<FK>>
+  assignee_id : INTEGER <<FK>>
+  * created_at : DATETIME
+  * updated_at : DATETIME
+  due_date : DATETIME
+  completed_at : DATETIME
+}
+
+entity "reports" as reports {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(200)
+  * report_type : VARCHAR(50)
+  parameters : TEXT
+  * generated_by : INTEGER <<FK>>
+  * generated_at : DATETIME
+  file_path : VARCHAR(500)
+}
+
+users ||--o{ tasks : "creates (creator_id)"
+users ||--o{ tasks : "assigned to (assignee_id)"
+projects ||--o{ tasks : "contains"
+users ||--o{ reports : "generates"
+
+note right of tasks
+  Статусы:
+  - new
+  - in_progress
+  - review
+  - completed
+  - rejected
+  
+  Приоритеты:
+  - low
+  - medium
+  - high
+end note
+
+note right of users
+  Роли:
+  - admin
+  - manager
+  - executor
+end note
+
+note right of reports
+  Типы отчётов:
+  - by_user
+  - by_project
+  - by_period
+  - pdf_export
+  - excel_export
+end note
+
+@enduml

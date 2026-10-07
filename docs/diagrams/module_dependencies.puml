@@ -1,0 +1,71 @@
+﻿@startuml module_dependencies
+
+package "ProjectFlow System" {
+  
+  component [AuthModule] as auth
+  component [TaskModule] as tasks
+  component [ReportModule] as reports
+  database [SQLite/PostgreSQL] as db
+  component [JWT Manager] as jwt
+  component [Flask App] as app
+  
+  app --> auth : registers
+  app --> tasks : registers
+  app --> reports : registers
+  app --> jwt : initializes
+  app --> db : initializes
+  
+  auth --> db : read/write users
+  auth --> jwt : creates tokens
+  
+  tasks --> db : read/write tasks, projects
+  tasks --> jwt : validates tokens
+  tasks --> auth : checks permissions
+  
+  reports --> db : read tasks, users, projects
+  reports --> jwt : validates tokens
+  reports --> auth : checks permissions
+  reports --> tasks : reads task data
+  
+}
+
+actor User
+actor Admin
+actor Manager
+actor Executor
+
+User --> auth : login/register
+Admin --> tasks : full access
+Manager --> tasks : manage tasks
+Executor --> tasks : work on assigned tasks
+
+User --> reports : view reports
+Admin --> reports : all reports
+Manager --> reports : project reports
+Executor --> reports : own reports
+
+note right of auth
+  Модуль авторизации
+  - Регистрация
+  - Вход/выход
+  - JWT токены
+  - Управление ролями
+end note
+
+note right of tasks
+  Модуль задач
+  - CRUD операции
+  - Конечный автомат статусов
+  - Назначение исполнителей
+  - Фильтрация и поиск
+end note
+
+note right of reports
+  Модуль отчётов
+  - По исполнителю
+  - По проекту
+  - За период
+  - Экспорт PDF/Excel
+end note
+
+@enduml

@@ -1,0 +1,36 @@
+﻿@startuml task_state_diagram
+
+[*] --> new : Задача создана
+
+new --> in_progress : Взята в работу
+new --> rejected : Отклонена
+
+in_progress --> review : Выполнена, отправлена на проверку
+in_progress --> rejected : Отклонена в процессе работы
+
+review --> completed : Проверена и принята
+review --> rejected : Отклонена после проверки
+
+rejected --> new : Возврат в начальный статус
+rejected --> in_progress : Возврат в работу
+
+completed --> [*] : Задача завершена (финальный статус)
+
+note right of new
+  Статус по умолчанию
+  при создании задачи
+end note
+
+note right of completed
+  Финальный статус
+  Дальнейшие переходы
+  невозможны
+end note
+
+note right of rejected
+  Промежуточный статус
+  Требует доработки
+  Можно вернуть в работу
+end note
+
+@enduml
