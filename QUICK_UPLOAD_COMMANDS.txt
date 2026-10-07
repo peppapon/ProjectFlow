@@ -1,0 +1,49 @@
+﻿# ═══════════════════════════════════════════════════
+#   КОМАНДЫ ДЛЯ ЗАГРУЗКИ PROJECTFLOW НА GITHUB
+# ═══════════════════════════════════════════════════
+
+## ШАГ 1: Создайте Personal Access Token
+Откройте: https://github.com/settings/tokens
+1. Нажмите "Generate new token (classic)"
+2. Name: ProjectFlow Upload
+3. Expiration: 90 days
+4. Scope: ☑️ repo
+5. Нажмите "Generate token"
+6. СКОПИРУЙТЕ ТОКЕН!
+
+## ШАГ 2: Создайте репозиторий
+Откройте: https://github.com/new
+1. Repository name: ProjectFlow
+2. Description: Система управления проектами - ПП.02
+3. Public или Private
+4. НЕ добавляйте README, .gitignore, license
+5. Нажмите "Create repository"
+
+## ШАГ 3: Выполните эти команды в PowerShell
+
+# Перейдите в директорию проекта
+cd C:\Users\ilnaz_16a9y7w\Documents\deepseek-harness\default-workspace\ProjectFlow-Python
+
+# Загрузите master ветку
+git push -u origin master
+
+# При запросе введите:
+# Username: peppapon
+# Password: [ваш Personal Access Token]
+
+# Загрузите develop ветку
+git push -u origin develop
+
+## ШАГ 4: Проверьте результат
+Откройте: https://github.com/peppapon/ProjectFlow
+
+Должно быть загружено:
+✓ 37 файлов
+✓ 12 коммитов
+✓ 2 ветки (master, develop)
+✓ README.md на главной странице
+✓ Отчёт DOCX в docs/
+
+═══════════════════════════════════════════════════
+            ПРОЕКТ ГОТОВ К ЗАГРУЗКЕ!
+═══════════════════════════════════════════════════
